@@ -1,18 +1,24 @@
 export default {
 	fetch(request) {
-		if(request.method=="POST") {
-		return new Response('Hello worker!', {
-			headers: {
-				'content-type': 'text/plain',
-			},
-		});
-	}
-	else {
-		return new Response('Error Worker!', {
-			headers: {
-				'content-type' : 'text/plain',
-			}
-		})
-	}
-	},
+    let response = {
+			"method": request.method,
+			"url": request.url,
+      "body": request.body,
+
+		}
+    if(request.method=="POST"){
+      return new Response(JSON.stringify(response, null, 1),{
+        headers: {
+          "content-type": "text/plain"
+        }
+      })
+    }
+    else{
+      return new Response("Not a POST request",{
+        headers: {
+          "content-type": "text/plain"
+        }
+      })
+    }
+  }
 };
